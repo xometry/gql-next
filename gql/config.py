@@ -10,7 +10,7 @@ ConfigT = TypeVar('ConfigT', bound='ConfigT')
 class Config:
     schema: str
     endpoint: str
-    endpoint_type: str
+    endpoint_type: str = 'static'
     documents: str
     custom_header: str = ''
 
