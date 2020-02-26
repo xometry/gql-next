@@ -43,7 +43,7 @@ def cli():
 @cli.command()
 @click.option('--schema', prompt=SCHEMA_PROMPT, default='http://localhost:4000')
 @click.option('--endpoint', prompt=ENDPOINT_PROMPT, default='same as schema')
-@click.option('--endpoint_type', prompt=TYPE_PROMPT, default='static', type=click.Choice(['static', 'variable'], case_sensitive=False))
+@click.option('--endpoint_type', prompt=TYPE_PROMPT, default='static')
 @click.option('--root', prompt=ROOT_PROMPT, default='./src')
 @click.option('-c', '--config', 'config_filename', default=DEFAULT_CONFIG_FNAME, type=click.Path(exists=False))
 def init(schema, endpoint, endpoint_type, root, config_filename):
