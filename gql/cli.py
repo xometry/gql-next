@@ -40,6 +40,7 @@ def cli():
     pass
 
 
+# Just check that line number of error updates
 @cli.command()
 @click.option('--schema', prompt=SCHEMA_PROMPT, default='http://localhost:4000')
 @click.option('--endpoint', prompt=ENDPOINT_PROMPT, default='same as schema')
