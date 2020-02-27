@@ -12,7 +12,7 @@ class Config:
     endpoint: str
     documents: str
     custom_header: str = ''
-    client_headers: dict = field(default_factory=dict)
+    client_headers: dict = None
 
     @classmethod
     def load(cls: Type[ConfigT], filename: str) -> ConfigT:

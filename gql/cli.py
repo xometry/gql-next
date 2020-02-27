@@ -53,7 +53,8 @@ def init(schema, endpoint, root, config_filename):
     config = Config(
         schema=schema,
         endpoint=endpoint,
-        documents=join_paths(root, '**/*.graphql')
+        documents=join_paths(root, '**/*.graphql'),
+        client_headers={}
     )
 
     config.save(config_filename)
