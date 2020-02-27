@@ -12,6 +12,7 @@ class Config:
     endpoint: str
     documents: str
     custom_header: str = ''
+    client_headers: dict = {}
 
     @classmethod
     def load(cls: Type[ConfigT], filename: str) -> ConfigT:
