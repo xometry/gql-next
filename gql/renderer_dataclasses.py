@@ -87,12 +87,7 @@ class DataclassesRenderer:
 
         buffer.write('')
 
-    def __render_operation(self, parsed_query: ParsedQuery, buffer: CodeChunk, parsed_op: ParsedOperation):
-        if self.config.endpoint_type == 'variable':
-            client_endpoint = f"{self.config.endpoint}"
-        else:
-            client_endpoint = f"\'{self.config.endpoint}\'"
-        
+    def __render_operation(self, parsed_query: ParsedQuery, buffer: CodeChunk, parsed_op: ParsedOperation):        
         buffer.write('@dataclass_json')
         buffer.write('@dataclass')
         with buffer.write_block(f'class {parsed_op.name}:'):
@@ -121,7 +116,7 @@ class DataclassesRenderer:
 
             buffer.write('@classmethod')
             with buffer.write_block(f'def execute(cls, {vars_args} on_before_callback: Callable[[Mapping[str, str], Mapping[str, str]], None] = None):'):
-                buffer.write(f'client = Client({client_endpoint})')
+                buffer.write(f'client = Client({self.config.endpoint})')
                 buffer.write(f'variables = {variables_dict}')
                 buffer.write('response_text = client.call(cls.__QUERY__, variables=variables, on_before_callback=on_before_callback)')
                 buffer.write('return cls.from_json(response_text)')
@@ -130,7 +125,7 @@ class DataclassesRenderer:
 
             buffer.write('@classmethod')
             with buffer.write_block(f'async def execute_async(cls, {vars_args} on_before_callback: Callable[[Mapping[str, str], Mapping[str, str]], None] = None):'):
-                buffer.write(f'client = AsyncIOClient({client_endpoint})')
+                buffer.write(f'client = AsyncIOClient({self.config.endpoint})')
                 buffer.write(f'variables = {variables_dict}')
                 buffer.write(f'response_text = await client.call(cls.__QUERY__, variables=variables, on_before_callback=on_before_callback)')
                 buffer.write(f'return cls.from_json(response_text)')

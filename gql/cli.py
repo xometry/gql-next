@@ -19,10 +19,7 @@ SCHEMA_PROMPT = click.style('Where is your schema?: ', fg='bright_white') + \
                 click.style('(path or url) ', fg='bright_black', dim=False)
 
 ENDPOINT_PROMPT = click.style('What is the endpoint for the API?: ', fg='bright_white') + \
-                  click.style('(string or variable) ', fg='bright_black', dim=False)
-
-TYPE_PROMPT = click.style('Was the supplied endpoint a string or variable definition?: ', fg='bright_white') + \
-                       click.style('(options: \'static\' or \'variable\') ', fg='bright_black', dim=False)
+                  click.style('(wrap static strings in single quotes, \'<string>\') ', fg='bright_black', dim=False)
 
 ROOT_PROMPT = click.style('Whats the root of your project: ', fg='bright_white') + \
               click.style('(path or url) ', fg='bright_black', dim=False)
@@ -44,20 +41,18 @@ def cli():
 @cli.command()
 @click.option('--schema', prompt=SCHEMA_PROMPT, default='http://localhost:4000')
 @click.option('--endpoint', prompt=ENDPOINT_PROMPT, default='same as schema')
-@click.option('--endpoint_type', prompt=TYPE_PROMPT, default='static', type=click.Choice(['static', 'variable'], case_sensitive=False))
 @click.option('--root', prompt=ROOT_PROMPT, default='./src')
 @click.option('-c', '--config', 'config_filename', default=DEFAULT_CONFIG_FNAME, type=click.Path(exists=False))
-def init(schema, endpoint, endpoint_type, root, config_filename):
+def init(schema, endpoint, root, config_filename):
     if isfile(config_filename):
         click.confirm(f'{config_filename} already exists. Are you sure you want to continue?', abort=True)
 
     if endpoint == 'same as schema':
-        endpoint = schema
+        endpoint = f"'{schema}'"
 
     config = Config(
         schema=schema,
         endpoint=endpoint,
-        endpoint_type=endpoint_type,
         documents=join_paths(root, '**/*.graphql')
     )
 
