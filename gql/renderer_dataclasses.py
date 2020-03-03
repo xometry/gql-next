@@ -87,7 +87,7 @@ class DataclassesRenderer:
 
         buffer.write('')
 
-    def __render_operation(self, parsed_query: ParsedQuery, buffer: CodeChunk, parsed_op: ParsedOperation):        
+    def __render_operation(self, parsed_query: ParsedQuery, buffer: CodeChunk, parsed_op: ParsedOperation):
         buffer.write('@dataclass_json')
         buffer.write('@dataclass')
         with buffer.write_block(f'class {parsed_op.name}:'):
