@@ -1,4 +1,4 @@
-from typing import Type, TypeVar
+from typing import Type, TypeVar, Dict, Any
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 
@@ -11,6 +11,7 @@ class Config:
     schema: str
     endpoint: str
     documents: str
+    client_headers: Dict[str, Any]
     custom_header: str = ''
 
     @classmethod
